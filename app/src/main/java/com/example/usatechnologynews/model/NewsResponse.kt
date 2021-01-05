@@ -1,7 +1,5 @@
 package com.example.usatechnologynews.model
 
-
-
 data class NewsResponse(
     val articles: List<Article>,
     val status: String,
