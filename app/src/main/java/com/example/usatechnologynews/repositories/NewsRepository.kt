@@ -2,6 +2,7 @@ package com.example.usatechnologynews.repositories
 
 import com.example.usatechnologynews.api.NewsApi
 import com.example.usatechnologynews.model.Article
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import java.lang.Math.sqrt
 import javax.inject.Inject
@@ -14,7 +15,7 @@ class NewsRepository @Inject constructor(private val newsApi: NewsApi) {
             emit(latestNews)
         }
     }
-    val getNewsList: Flow<List<Article>> = getNews.buffer().catch { e-> e.message }
+    val getNewsList: Flow<List<Article>> = getNews.buffer().flowOn(Dispatchers.IO).catch { e-> e.message }
 
     fun <T:Number> Flow<T>.sqrts():Flow<Double>{
        return flow<Double> {
