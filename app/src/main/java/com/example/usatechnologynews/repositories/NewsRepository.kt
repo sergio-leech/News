@@ -7,12 +7,14 @@ import java.lang.Math.sqrt
 import javax.inject.Inject
 
 class NewsRepository @Inject constructor(private val newsApi: NewsApi) {
-    val getNewsList: Flow<List<Article>> = flow {
+
+   private val getNews: Flow<List<Article>> = flow {
         while (true) {
             val latestNews = newsApi.getNewsList()
             emit(latestNews)
         }
     }
+    val getNewsList: Flow<List<Article>> = getNews.catch { e-> e.message }
 
     fun <T:Number> Flow<T>.sqrts():Flow<Double>{
        return flow<Double> {
