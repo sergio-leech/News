@@ -5,13 +5,12 @@ import androidx.lifecycle.*
 import com.example.usatechnologynews.model.Article
 import com.example.usatechnologynews.model.ListType
 import com.example.usatechnologynews.repositories.NewsRepository
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class NewsViewModel @ViewModelInject constructor(private val repository: NewsRepository):ViewModel() {
 
-    val newsList= liveData {
-        emit(repository.getNewsList())
-  }
+val newsList:LiveData<List<Article>> = repository.getNewsList.asLiveData()
 
     private val _newsListType: MutableLiveData<ListType> = MutableLiveData()
     val newsListType: LiveData<ListType>
