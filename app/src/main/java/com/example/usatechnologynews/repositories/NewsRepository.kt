@@ -14,7 +14,7 @@ class NewsRepository @Inject constructor(private val newsApi: NewsApi) {
             emit(latestNews)
         }
     }
-    val getNewsList: Flow<List<Article>> = getNews.catch { e-> e.message }
+    val getNewsList: Flow<List<Article>> = getNews.buffer().catch { e-> e.message }
 
     fun <T:Number> Flow<T>.sqrts():Flow<Double>{
        return flow<Double> {
